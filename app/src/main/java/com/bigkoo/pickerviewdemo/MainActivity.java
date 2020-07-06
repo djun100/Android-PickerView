@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.i("pvTime", "onTimeSelectChanged");
                     }
                 })
-                .setType(new boolean[]{true, true, true, true, true, true})
+                .setType(new boolean[]{true, true, true, false, false, false})
                 .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。
                 .addOnCancelClickListener(new View.OnClickListener() {
                     @Override
@@ -217,8 +217,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 })
                 .setItemVisibleCount(5) //若设置偶数，实际值会加1（比如设置6，则最大可见条目为7）
-                .setLineSpacingMultiplier(2.0f)
+                .setLineSpacingMultiplier(3.5f)
                 .isAlphaGradient(true)
+                .isCenterLabel(true) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .build();
 
         Dialog mDialog = pvTime.getDialog();

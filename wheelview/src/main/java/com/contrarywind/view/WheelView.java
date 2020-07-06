@@ -440,10 +440,22 @@ public class WheelView extends View {
         }
 
         //只显示选中项Label文字的模式，并且Label文字不为空，则进行绘制
+//        if (!TextUtils.isEmpty(label) && isCenterLabel) {
+//            //绘制文字，靠右并留出空隙
+////            int drawRightContentStart = getTextWidth(paintCenterText, label)+;
+//            int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
+//            canvas.drawText(label, drawRightContentStart - CENTER_CONTENT_OFFSET, centerY, paintCenterText);
+//        }
+
         if (!TextUtils.isEmpty(label) && isCenterLabel) {
-            //绘制文字，靠右并留出空隙
-            int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
-            canvas.drawText(label, drawRightContentStart - CENTER_CONTENT_OFFSET, centerY, paintCenterText);
+            int index = preCurrentIndex - (itemsVisible / 2);
+            Object showText = adapter.getItem(index);
+            String content = getContentText(showText);
+//            String content = getContentText(visibles[visibles.length / 2]);
+            measuredCenterContentStart(content);
+            int width = measuredCenterContentWidth(content);
+            int textWidth = getTextWidth(paintCenterText, label) / 3;
+            canvas.drawText(label, drawCenterContentStart + width + textWidth, centerY -0, paintCenterText);
         }
 
         // 设置数组中每个元素的值
@@ -544,6 +556,12 @@ public class WheelView extends View {
             }
             counter++;
         }
+    }
+
+    private int measuredCenterContentWidth(String content) {
+        Rect rect = new Rect();
+        paintCenterText.getTextBounds(content, 0, content.length(), rect);
+        return rect.right;
     }
 
     //设置文字倾斜角度，透明度
